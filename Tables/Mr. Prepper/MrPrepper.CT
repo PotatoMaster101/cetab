@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Player Stats"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(player,55 48 8B EC 48 83 EC 30 48 89 75 F0 48 89 7D F8 48 8B F1 48 8B 86 B8)
+alloc(newmem,$1000,player)
+alloc(player_base,8)
+registersymbol(player)
+registersymbol(player_base)
+label(code)
+label(return)
+
+newmem:
+  mov [player_base],rax
+
+code:
+  push rbp
+  mov rbp,rsp
+  sub rsp,30
+  jmp return
+
+player:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+player:
+  db 55 48 8B EC 48 83 EC 30
+
+unregistersymbol(player)
+unregistersymbol(player_base)
+dealloc(newmem)
+dealloc(player_base)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"Walking Speed"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>[player_base]+12c</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"Running Speed"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>[player_base]+130</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"Base Address (Debug)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[player_base]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

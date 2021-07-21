@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Infinite HP"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(hp,DH-Win64-Shipping.exe,F3 0F 11 83 98 00 00 00 0F 54 15)
+alloc(newmem,$1000,hp)
+alloc(enable_ohk,4)
+registersymbol(hp)
+registersymbol(enable_ohk)
+label(code)
+label(return)
+label(test_ohk)
+
+newmem:
+  cmp rcx,0
+  je test_ohk
+  movss xmm0,[rbx+48]
+
+code:
+  movss [rbx+98],xmm0
+  jmp return
+
+test_ohk:
+  cmp [enable_ohk],0
+  je code
+  mov [rbx+98],(float)0.0
+  jmp return
+
+enable_ohk:
+  dd 0
+
+hp:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+hp:
+  db F3 0F 11 83 98 00 00 00
+
+unregistersymbol(hp)
+unregistersymbol(enable_ohk)
+dealloc(newmem)
+dealloc(enable_ohk)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"1 Hit Kill"</Description>
+          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>enable_ohk</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Infinite Zap"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(zap,DH-Win64-Shipping.exe,F3 0F 11 91 3C 07 00 00 48)
+registersymbol(zap)
+
+zap:
+  db 90 90 90 90 90 90 90 90
+
+[DISABLE]
+zap:
+  db F3 0F 11 91 3C 07 00 00
+
+unregistersymbol(zap)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Infinite Jetpack"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(jetpack,DH-Win64-Shipping.exe,F3 0F 5C C8 F3 0F 11 8B 6C 01 00 00 E9 DF)
+registersymbol(jetpack)
+
+jetpack:
+  db 90 90 90 90
+
+[DISABLE]
+jetpack:
+  db F3 0F 5C C8
+
+unregistersymbol(jetpack)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"Infinite Ammo"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(ammo,DH-Win64-Shipping.exe,4A 06 02 41 8B CF D3 C5)
+alloc(newmem,$1000,ammo)
+registersymbol(ammo)
+label(code)
+label(return)
+
+newmem:
+  mov [rax+4],#999
+
+code:
+  mov ecx,r15d
+  rol ebp,cl
+  jmp return
+
+ammo+03:
+  jmp newmem
+return:
+
+[DISABLE]
+ammo+03:
+  db 41 8B CF D3 C5
+
+unregistersymbol(ammo)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Infinite Holobob"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(holobob,DH-Win64-Shipping.exe,F3 0F 11 87 58 02 00 00 77)
+alloc(newmem,$1000,holobob)
+registersymbol(holobob)
+label(code)
+label(return)
+
+newmem:
+  movss xmm0,[rdi+210]
+
+code:
+  movss [rdi+258],xmm0
+  jmp return
+
+holobob:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+holobob:
+  db F3 0F 11 87 58 02 00 00
+
+unregistersymbol(holobob)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

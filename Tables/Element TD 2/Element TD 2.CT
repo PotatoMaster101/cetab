@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Find Game Stats"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(game,GameAssembly.dll,8B 81 04 01 00 00 03 81 00 01 00 00 C3)
+alloc(newmem,$1000,game)
+alloc(player,8)
+registersymbol(game)
+registersymbol(player)
+label(code)
+label(return)
+
+newmem:
+  mov [player],rcx
+
+code:
+  mov eax,[rcx+104]
+  jmp return
+
+game:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+game:
+  db 8B 81 04 01 00 00 03 81 00 01 00 00 C3
+
+unregistersymbol(game)
+unregistersymbol(player)
+dealloc(newmem)
+dealloc(player)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"Life"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[player]+E0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"Gold"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[player]+F0</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"Essense"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[player]+100</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"Mana"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[player]+F4</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>5</ID>
+          <Description>"Free Pick"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[player]+10C</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>6</ID>
+          <Description>"Base Address (Debug)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[player]</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>7</ID>
+      <Description>"OP Towers"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(tower,GameAssembly.dll,48 83 EC 28 48 8B 81 A0 00 00 00 48 85 C0 74 09)
+alloc(newmem,$1000,tower)
+registersymbol(tower)
+label(code)
+label(return)
+
+newmem:
+  mov [rcx+C8],#2000000000    // damage
+  mov [rcx+CC],#2000000000    // speed
+  mov [rcx+D0],#2000000000    // range
+  mov [rcx+D4],#2000000000    // AOE
+
+code:
+  sub rsp,28
+  mov rax,[rcx+A0]
+  jmp return
+
+tower:
+  jmp newmem
+  nop 6
+return:
+
+[DISABLE]
+tower:
+  db 48 83 EC 28 48 8B 81 A0 00 00 00 48 85 C0 74 09
+
+unregistersymbol(tower)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
