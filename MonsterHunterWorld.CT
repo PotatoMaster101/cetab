@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Inf. Stamina"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(stamina,MonsterHunterWorld.exe,F3 0F 11 41 6C C3 40 53 48 83 EC 40 48 8D 0D 13 43 CA 03)
+stamina:
+db 90 90 90 90 90
+
+[DISABLE]
+stamina:
+  db F3 0F 11 41 6C
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

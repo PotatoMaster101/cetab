@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Infinite Money"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(money,supersanctumtd.s86,01 41 14 01 41 04)
+alloc(newmem,$1000)
+registersymbol(money)
+label(code)
+label(return)
+
+newmem:
+  mov [ecx+14],#999999999
+  jmp return
+
+code:
+  add [ecx+14],eax
+  add [ecx+04],eax
+  jmp return
+
+money:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+money:
+  db 01 41 14 01 41 04
+
+unregistersymbol(money)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"One Hit Kill"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(dmg,supersanctumtd.s86,89 46 0C 85 C0 7F)
+alloc(newmem,$1000)
+registersymbol(dmg)
+label(code)
+label(return)
+
+newmem:
+  xor eax,eax
+
+code:
+  mov [esi+0C],eax
+  test eax,eax
+  jmp return
+
+dmg:
+  jmp newmem
+return:
+
+[DISABLE]
+dmg:
+  db 89 46 0C 85 C0
+
+unregistersymbol(dmg)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

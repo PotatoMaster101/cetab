@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Infinite HP (TODO)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(hp,SOTTR.exe,F3 0F 11 70 2C 48 8B 8B A8)
+alloc(newmem,$1000,hp)
+registersymbol(hp)
+label(code)
+label(return)
+
+newmem:
+  // TODO
+
+code:
+  movss [rax+2C],xmm6
+  jmp return
+
+hp:
+  jmp newmem
+return:
+
+[DISABLE]
+hp:
+  db F3 0F 11 70 2C
+
+unregistersymbol(hp)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Infinite Breath"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(breath,SOTTR.exe,F3 0F 11 89 F8 1B 00 00)
+alloc(newmem,$1000,breath)
+registersymbol(breath)
+label(code)
+label(return)
+label(cap)
+
+newmem:
+  movss xmm1,[cap]
+
+code:
+  movss [rcx+1BF8],xmm1
+  jmp return
+
+cap:
+  dd (float)50
+
+breath:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+breath:
+  db F3 0F 11 89 F8 1B 00 00
+
+unregistersymbol(breath)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Infinite Ammo"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(ammo,SOTTR.exe,41 0F B7 40 0C EB 03)
+alloc(newmem,$1000,ammo)
+registersymbol(ammo)
+label(code)
+label(return)
+
+newmem:
+  mov [r8+0C],3E7
+
+code:
+  movzx eax,word ptr [r8+0C]
+  jmp return
+
+ammo:
+  jmp newmem
+return:
+
+
+[DISABLE]
+ammo:
+  db 41 0F B7 40 0C
+
+unregistersymbol(ammo)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Infinite Resource"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(resource,SOTTR.exe,0F B7 43 0C 99 F7 79 08 0F)
+alloc(newmem,$1000,resource)
+registersymbol(resource)
+label(code)
+label(return)
+
+newmem:
+  mov [rbx+0C],FFFF
+
+code:
+  movzx eax,word ptr [rbx+0C]
+  cdq
+  jmp return
+
+resource:
+  jmp newmem
+return:
+
+[DISABLE]
+resource:
+  db 0F B7 43 0C 99
+
+unregistersymbol(resource)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

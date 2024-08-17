@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Fast House Healing (Activate after using once)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(fast_heal,8B 75 08 8B 7D 0C 0F B6 86 80)
+alloc(newmem,$1000)
+registersymbol(fast_heal)
+label(code)
+label(return)
+
+newmem:
+  mov [eax+84],0
+  mov [eax+88],0
+
+code:
+  mov esi,[ebp+08]
+  mov edi,[ebp+0C]
+  jmp return
+
+fast_heal:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+fast_heal:
+  db 8B 75 08 8B 7D 0C
+
+unregistersymbol(fast_heal)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Infinite Mines (Activate after using once)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(inf_mines,8B 75 08 8B 86 CC 00 00 00)
+alloc(newmem,$1000)
+label(code)
+label(return)
+
+newmem:
+  mov [edi+9C],#999
+
+code:
+  mov esi,[ebp+08]
+  mov eax,[esi+000000CC]
+  jmp return
+
+inf_mines:
+  jmp newmem
+  nop 4
+return:
+registersymbol(inf_mines)
+
+[DISABLE]
+inf_mines:
+  db 8B 75 08 8B 86 CC 00 00 00
+
+unregistersymbol(inf_mines)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Infinite Bomb (Activate after using once)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(inf_bomb,8B 75 08 8D 85 6C FF FF FF)
+alloc(newmem,$1000)
+registersymbol(inf_bomb)
+label(code)
+label(return)
+
+newmem:
+  mov [edi+9C],#999
+
+code:
+  mov esi,[ebp+08]
+  lea eax,[ebp-00000094]
+  jmp return
+
+inf_bomb:
+  jmp newmem
+  nop 4
+return:
+
+[DISABLE]
+inf_bomb:
+  db 8B 75 08 8D 85 6C FF FF FF
+
+unregistersymbol(inf_bomb)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"No Volley Cooldown (Activate after using once)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(volley_cooldown,8B 75 08 8B 7D 10 C7) // should be unique
+alloc(newmem,$1000)
+label(code)
+label(return)
+
+newmem:
+  mov [edi+94],0
+
+code:
+  mov esi,[ebp+08]
+  mov edi,[ebp+10]
+  jmp return
+
+volley_cooldown:
+  jmp newmem
+  nop
+return:
+registersymbol(volley_cooldown)
+
+[DISABLE]
+volley_cooldown:
+  db 8B 75 08 8B 7D 10
+
+unregistersymbol(volley_cooldown)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"No Warhammer Cooldown (Activate after using once)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(warhammer_cooldown,8B 75 0C 8D 45 80 83)
+alloc(newmem,$1000)
+registersymbol(warhammer_cooldown)
+label(code)
+label(return)
+
+newmem:
+  mov [edi+94],0
+
+code:
+  mov esi,[ebp+0C]
+  lea eax,[ebp-80]
+  jmp return
+
+warhammer_cooldown:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+warhammer_cooldown:
+  db 8B 75 0C 8D 45 80
+
+unregistersymbol(warhammer_cooldown)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Huge Squad"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscan(squad,83 C4 10 89 87 98 00 00 00 83)
+alloc(newmem,$1000)
+registersymbol(squad)
+label(code)
+label(return)
+
+newmem:
+  mov [edi+C4],#100
+
+code:
+  add esp,10
+  mov [edi+00000098],eax
+  jmp return
+
+squad:
+  jmp newmem
+  nop 4
+return:
+
+[DISABLE]
+squad:
+  db 83 C4 10 89 87 98 00 00 00
+
+unregistersymbol(squad)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

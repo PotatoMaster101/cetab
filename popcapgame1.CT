@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"No Cooldown"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(cooldown,popcapgame1.exe,FF 47 24 8B 47 24 3B 47 28)
+cooldown:
+  db FF 47 48
+
+[DISABLE]
+cooldown:
+  db FF 47 24
+
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Inf. Sun"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(sun,popcapgame1.exe,2B F3 89 B7 78 55 00 00)
+sun:
+  db 01 DE
+
+[DISABLE]
+sun:
+  db 2B F3
+
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>

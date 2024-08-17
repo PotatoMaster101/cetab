@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Infinite HP"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(hp,re3.exe,41 89 41 58 C3 CC CC CC CC)
+alloc(newmem,$1000,hp)
+alloc(ohk,$1)
+registersymbol(hp)
+registersymbol(ohk)
+label(code)
+label(return)
+
+newmem:
+  cmp [r9+DC],0     // npc: [r9+DC] == 0
+  je kill
+  mov eax,[r9+54]   // max hp: [r9+54]
+  jmp code
+
+kill:
+  cmp byte ptr [ohk],0
+  je code
+  xor eax,eax
+  jmp code
+
+ohk:
+  db 0
+
+code:
+  mov [r9+58],eax
+  ret
+  jmp return
+
+hp:
+  jmp newmem
+return:
+
+[DISABLE]
+hp:
+  db 41 89 41 58 C3 CC CC CC CC
+
+unregistersymbol(hp)
+unregistersymbol(ohk)
+dealloc(newmem)
+dealloc(ohk)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"One hit kill"</Description>
+          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Byte</VariableType>
+          <Address>ohk</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Infinite Ammo"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(ammo,re3.exe,89 41 20 48 8B 7C 24 40)
+ammo:
+  db 89 51 20
+
+[DISABLE]
+ammo:
+  db 89 41 20
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
