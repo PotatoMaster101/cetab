@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="46">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Weapon"</Description>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>100</ID>
+          <Description>"Infinite Ammo"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(ammo,FSD-Win64-Shipping.exe,89 8B 9C 06 00 00 48 8D)
+aobscanmodule(ammo_born_ready,FSD-Win64-Shipping.exe,89 91 9C 06 00 00)
+registersymbol(ammo)
+registersymbol(ammo_born_ready)
+
+ammo:
+  db 90 90 90 90 90 90
+ammo_born_ready:
+  db 90 90 90 90 90 90
+
+[DISABLE]
+ammo:
+  db 89 8B 9C 06 00 00
+ammo_born_ready:
+  db 89 91 9C 06 00 00
+
+unregistersymbol(ammo)
+unregistersymbol(ammo_born_ready)
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>112</Key>
+              </Keys>
+              <ID>0</ID>
+              <ActivateSound>Activate</ActivateSound>
+              <DeactivateSound>Deactivate</DeactivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>200</ID>
+          <Description>"No Reload"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(clip,FSD-Win64-Shipping.exe,89 81 A0 06 00 00 48 8B 01)
+aobscanmodule(clip_minigun,FSD-Win64-Shipping.exe,89 86 A0 06 00 00 89)
+registersymbol(clip)
+registersymbol(clip_minigun)
+
+clip:
+  db 90 90 90 90 90 90
+clip_minigun:
+  db 90 90 90 90 90 90
+
+[DISABLE]
+clip:
+  db 89 81 A0 06 00 00
+clip_minigun:
+  db 89 86 A0 06 00 00
+
+unregistersymbol(clip)
+unregistersymbol(clip_minigun)
+</AssemblerScript>
+          <Hotkeys>
+            <Hotkey>
+              <Action>Toggle Activation</Action>
+              <Keys>
+                <Key>112</Key>
+              </Keys>
+              <ID>0</ID>
+              <ActivateSound>Activate</ActivateSound>
+              <DeactivateSound>Deactivate</DeactivateSound>
+            </Hotkey>
+          </Hotkeys>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>300</ID>
+          <Description>"No Overheat"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(weapon_overheat,FSD-Win64-Shipping.exe,0F 85 89 00 00 00 8B 83 20 03)
+aobscanmodule(weapon_overheat_flag,FSD-Win64-Shipping.exe,88 83 50 03 00 00 48 8B 03)
+registersymbol(weapon_overheat)
+registersymbol(weapon_overheat_flag)
+
+weapon_overheat:
+  db E9 8A 00 00 00 90
+weapon_overheat_flag:
+  db 90 90 90 90 90 90
+
+[DISABLE]
+weapon_overheat:
+  db 0F 85 89 00 00 00
+weapon_overheat_flag:
+  db 88 83 50 03 00 00
+
+unregistersymbol(weapon_overheat)
+unregistersymbol(weapon_overheat_flag)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>400</ID>
+          <Description>"Fire Rate Multiplier"</Description>
+          <Options moHideChildren="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(weapon_fire_rate,FSD-Win64-Shipping.exe,0F 28 CA F3 0F 5E C8 74)
+alloc(newmem,$1000,weapon_fire_rate)
+alloc(weapon_fire_rate_multiplier,4)
+registersymbol(weapon_fire_rate)
+registersymbol(weapon_fire_rate_multiplier)
+label(return)
+
+weapon_fire_rate_multiplier:
+  dd (float)1.25
+
+newmem:
+  movss xmm1,[weapon_fire_rate_multiplier]
+  mulss xmm0,xmm1
+  movaps xmm1,xmm2
+  divss xmm1,xmm0
+  jmp return
+
+weapon_fire_rate:
+  jmp newmem
+  nop 2
+return:
+
+[DISABLE]
+weapon_fire_rate:
+  db 0F 28 CA F3 0F 5E C8
+
+unregistersymbol(weapon_fire_rate)
+unregistersymbol(weapon_fire_rate_multiplier)
+dealloc(weapon_fire_rate_multiplier)
+dealloc(newmem)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>500</ID>
+              <Description>"Value"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>weapon_fire_rate_multiplier</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>600</ID>
+      <Description>"Scout"</Description>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>700</ID>
+          <Description>"No Grappling Hook Cooldown"</Description>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(grapple_cooldown,FSD-Win64-Shipping.exe,F3 0F 11 83 D8 00 00 00 0F 8A)
+registersymbol(grapple_cooldown)
+
+grapple_cooldown:
+  db F3 0F 11 9B D8 00 00 00
+
+[DISABLE]
+grapple_cooldown:
+  db F3 0F 11 83 D8 00 00 00
+
+unregistersymbol(grapple_cooldown)
+</AssemblerScript>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>800</ID>
+          <Description>"Find Grappling Hook Stats"</Description>
+          <Options moHideChildren="1"/>
+          <VariableType>Auto Assembler Script</VariableType>
+          <AssemblerScript>[ENABLE]
+aobscanmodule(grappling_hook,FSD-Win64-Shipping.exe,F3 41 0F 10 8E 28 04 00 00)
+alloc(newmem,$1000,grappling_hook)
+alloc(grappling_hook_distance,4)
+alloc(grappling_hook_travel_speed,4)
+alloc(grappling_hook_hook_speed,4)
+registersymbol(grappling_hook)
+registersymbol(grappling_hook_distance)
+registersymbol(grappling_hook_travel_speed)
+registersymbol(grappling_hook_hook_speed)
+label(return)
+
+grappling_hook_distance:
+  dd (float)15000.0
+grappling_hook_travel_speed:
+  dd (float)2250.0
+grappling_hook_hook_speed:
+  dd (float)0.15
+
+newmem:
+  movss xmm1,[grappling_hook_distance]
+  movss [r14+000003F0],xmm1
+  movss xmm1,[grappling_hook_travel_speed]
+  movss [r14+00000428],xmm1
+  movss xmm1,[grappling_hook_hook_speed]
+  movss [r14+00000430],xmm1
+  movss xmm1,[r14+00000428]
+  jmp return
+
+grappling_hook:
+  jmp newmem
+  nop 4
+return:
+
+[DISABLE]
+grappling_hook:
+  db F3 41 0F 10 8E 28 04 00 00
+
+unregistersymbol(grappling_hook)
+unregistersymbol(grappling_hook_distance)
+unregistersymbol(grappling_hook_travel_speed)
+unregistersymbol(grappling_hook_hook_speed)
+dealloc(grappling_hook_distance)
+dealloc(grappling_hook_travel_speed)
+dealloc(grappling_hook_hook_speed)
+dealloc(newmem)
+</AssemblerScript>
+          <CheatEntries>
+            <CheatEntry>
+              <ID>900</ID>
+              <Description>"Distance"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>grappling_hook_distance</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1000</ID>
+              <Description>"Travel Speed"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>grappling_hook_travel_speed</Address>
+            </CheatEntry>
+            <CheatEntry>
+              <ID>1100</ID>
+              <Description>"Hook Speed"</Description>
+              <ShowAsSigned>0</ShowAsSigned>
+              <VariableType>Float</VariableType>
+              <Address>grappling_hook_hook_speed</Address>
+            </CheatEntry>
+          </CheatEntries>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes/>
+  <UserdefinedSymbols/>
+</CheatTable>

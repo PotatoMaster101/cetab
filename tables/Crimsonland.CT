@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"HP"</Description>
+      <VariableType>Float</VariableType>
+      <Address>prog.dll+1B99F4</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Ammo"</Description>
+      <VariableType>Float</VariableType>
+      <Address>prog.dll+1B9D48</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Current Cooldown"</Description>
+      <VariableType>Float</VariableType>
+      <Address>prog.dll+1B9D50</Address>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Current Weapon"</Description>
+      <VariableType>4 Bytes</VariableType>
+      <Address>prog.dll+1B9D34</Address>
+    </CheatEntry>
+  </CheatEntries>
+  <UserdefinedSymbols/>
+</CheatTable>
