@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Inf Energy"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(infenergy,Control_DX12.exe,F3 0F 11 41 40 48 8B 08)
+alloc(newmem,$1000,infenergy)
+registersymbol(infenergy)
+label(return)
+
+newmem:
+  mov [rcx+40],(float)1.0
+  jmp return
+
+infenergy:
+  jmp newmem
+return:
+
+[DISABLE]
+infenergy:
+  db F3 0F 11 41 40 48 8B 08
+
+unregistersymbol(infenergy)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Inf Ammo"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(infammo,Control_DX12.exe,F3 0F 11 99 A8 01 00 00 48) // should be unique
+registersymbol(infammo)
+
+infammo:
+  db F3 0F 11 91 A8 01 00 00
+
+[DISABLE]
+infammo:
+  db F3 0F 11 99 A8 01 00 00
+
+unregistersymbol(infammo)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Item Decrease Debug (Do Not Use)"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(itemdec,Control_DX12.exe,2B CD 89 48 40)
+registersymbol(itemdec)
+
+itemdec:
+  db 2B CD 89 48 40
+
+[DISABLE]
+itemdec:
+  db 2B CD 89 48 40
+
+unregistersymbol(itemdec)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

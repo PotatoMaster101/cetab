@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="42">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Infinite Focus"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(focus1,Spider-Man.exe,F3 0F 10 8C C3 10 01 00 00 F3 0F 10)
+aobscanmodule(focus2,Spider-Man.exe,F3 0F 5C C8 F3 0F 58 D0)
+focus1:
+  db F3 0F 10 8C C3 14 01 00 00
+focus2:
+  db 90 90 90 90
+
+[DISABLE]
+focus1:
+  db F3 0F 10 8C C3 10 01 00 00
+focus2:
+  db F3 0F 5C C8
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Infinite Gadgets"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(web,Spider-Man.exe,41 2B DF 89 58 38)
+web:
+  db 90 90 90
+
+[DISABLE]
+web:
+  db 41 2B DF
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

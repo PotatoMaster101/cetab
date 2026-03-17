@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Find Grapple"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(grapple,JustCause4.exe,8B 08 89 8B CC 03 00 00)
+alloc(newmem,$1000,grapple)
+alloc(grapple_dist,8)
+registersymbol(grapple)
+registersymbol(grapple_dist)
+label(code)
+label(return)
+
+newmem:
+  mov [grapple_dist],rax
+  jmp code
+
+code:
+  mov ecx,[rax]
+  mov [rbx+3cc],ecx
+  jmp return
+
+grapple:
+  jmp newmem
+  nop 3
+return:
+
+[DISABLE]
+grapple:
+  db 8B 08 89 8B CC 03 00 00
+
+unregistersymbol(grapple)
+unregistersymbol(grapple_dist)
+dealloc(newmem)
+dealloc(grapple_dist)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"Distance"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>[grapple_dist]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>2</ID>
+          <Description>"Speed"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>[grapple_dist]+30</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>3</ID>
+          <Description>"Acceleration"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>[grapple_dist]+38</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>4</ID>
+          <Description>"Take Off Speed"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>[grapple_dist]+6c</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>5</ID>
+      <Description>"Inf. Ammo"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(ammo,JustCause4.exe,89 B4 B9 38 02 00 00)
+alloc(newmem,$1000,ammo)
+registersymbol(ammo)
+label(code)
+label(return)
+
+newmem:
+  mov esi,[rcx+rdi*4+2ec]
+  jmp code
+
+code:
+  mov [rcx+rdi*4+238],esi
+  jmp return
+
+ammo:
+  jmp newmem
+  nop 2
+return:
+
+[DISABLE]
+ammo:
+  db 89 B4 B9 38 02 00 00
+
+unregistersymbol(ammo)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>6</ID>
+      <Description>"Inf. Clip Ammo"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(clip,JustCause4.exe,89 91 6C 05 00 00 C3)
+alloc(newmem,$1000,clip)
+alloc(clip_base,8)
+registersymbol(clip)
+registersymbol(clip_base)
+label(code)
+label(return)
+
+newmem:
+  mov rdx,[rcx+558]
+  mov [clip_base],rdx
+  mov edx,[rdx+70]
+  jmp code
+
+code:
+  mov [rcx+56c],edx
+  jmp return
+
+clip:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+clip:
+  db 89 91 6C 05 00 00
+
+unregistersymbol(clip)
+unregistersymbol(clip_base)
+dealloc(newmem)
+dealloc(clip_base)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>7</ID>
+          <Description>"Base (Debug)"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[clip_base]</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>8</ID>
+          <Description>"Cap"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[clip_base]+70</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>9</ID>
+          <Description>"Shoot Speed"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>[clip_base]+88</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>10</ID>
+          <Description>"Damage"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>[clip_base]+dc</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"Bullet Speed"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Float</VariableType>
+          <Address>[clip_base]+16c</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

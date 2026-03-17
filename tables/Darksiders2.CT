@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Infinite HP + Wraith + Reaper"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(stats,Darksiders2.exe,F3 0F 11 40 08 48 8B 03)
+alloc(newmem,$1000,stats)
+registersymbol(stats)
+label(code)
+label(return)
+
+newmem:
+  cmp [rax+330],0   // not player: [rax+330] == 0
+  jne code
+  fild dword ptr [rax+8C]   // hp
+  fstp dword ptr [rax]
+  fild dword ptr [rax+90]   // wraith
+  fstp dword ptr [rax+4]
+  fild dword ptr [rax+94]   // reaper form
+  fstp dword ptr [rax+8]
+  jmp return
+
+code:
+  movss [rax+8],xmm0
+  jmp return
+
+stats:
+  jmp newmem
+return:
+
+[DISABLE]
+stats:
+  db F3 0F 11 40 08
+
+unregistersymbol(stats)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Insane Damage"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(enemy_hp,Darksiders2.exe,F3 41 0F 5C 46 28 F3 0F)
+alloc(newmem,$1000,enemy_hp)
+registersymbol(enemy_hp)
+label(code)
+label(return)
+label(min_hp)
+
+newmem:
+  comiss xmm0,[min_hp]
+  jl code
+  movss [r14+28],xmm0
+  fld dword ptr [r14+28]
+  fsub dword ptr [min_hp]
+  fstp dword ptr [r14+28]
+
+code:
+  subss xmm0,[r14+28]
+  jmp return
+
+min_hp:
+  dd (float)5.0
+
+enemy_hp:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+enemy_hp:
+  db F3 41 0F 5C 46 28
+
+unregistersymbol(enemy_hp)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Infinite Horse Dash"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(horse_dash1,Darksiders2.exe,7E 0D FF C8 89 81 4C 0E 00 00 ?? ?? ?? ?? ?? F3 0F)
+aobscanmodule(horse_dash2,Darksiders2.exe,7E 0D FF C8 89 81 4C 0E 00 00 ?? ?? ?? ?? ?? 48 8B)
+registersymbol(horse_dash1)
+registersymbol(horse_dash2)
+
+horse_dash1:
+  db EB 0D
+
+horse_dash2:
+  db EB 0D
+
+[DISABLE]
+horse_dash1:
+  db 7E 0D
+
+horse_dash2:
+  db 7E 0D
+
+unregistersymbol(horse_dash1)
+unregistersymbol(horse_dash2)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>3</ID>
+      <Description>"Infinite Ammo"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(ammo,Darksiders2.exe,74 06 FF 8B F0 03 00 00)
+registersymbol(ammo)
+
+ammo:
+  db EB 06
+
+[DISABLE]
+ammo:
+  db 74 06
+
+unregistersymbol(ammo)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>

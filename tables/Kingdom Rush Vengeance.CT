@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="34">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>0</ID>
+      <Description>"Infinite Player/Ally HP"</Description>
+      <Options moHideChildren="1"/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(player,Kingdom Rush Vengeance.exe,29 83 28 0C 00 00)
+alloc(newmem,$1000,player)
+alloc(insane_dmg,1)
+registersymbol(player)
+registersymbol(insane_dmg)
+label(code)
+label(return)
+label(dmg)
+
+newmem:
+  cmp [rbx+598],0     // not player/ally: [rbx+598] == 0
+  je dmg
+  push eax
+  mov eax,[rbx+C24]   // max hp: [rbx+C24]
+  mov [rbx+C28],eax
+  pop eax
+  jmp return
+
+code:
+  sub [rbx+C28],eax
+  jmp return
+
+dmg:
+  cmp byte ptr [insane_dmg],0
+  je code
+  mov eax,0xFFFF
+  jmp code
+
+insane_dmg:
+  db 0
+
+player:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+player:
+  db 29 83 28 0C 00 00
+
+unregistersymbol(player)
+unregistersymbol(insane_dmg)
+dealloc(newmem)
+dealloc(insane_dmg)
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>1</ID>
+          <Description>"Deal Insane Damage"</Description>
+          <DropDownList ReadOnly="1" DescriptionOnly="1" DisplayValueAsItem="1">0:No
+1:Yes
+</DropDownList>
+          <ShowAsSigned>0</ShowAsSigned>
+          <VariableType>Byte</VariableType>
+          <Address>insane_dmg</Address>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"Infinite Gold/Lives"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(stats,Kingdom Rush Vengeance.exe,89 91 40 08 00 00 C3)
+alloc(newmem,$1000,stats)
+registersymbol(stats)
+label(code)
+label(return)
+
+newmem:
+  mov [rcx+844],#999
+  mov edx,#999999
+
+code:
+  mov [rcx+840],edx
+  jmp return
+
+stats:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+
+stats:
+  db 89 91 40 08 00 00 C3
+
+unregistersymbol(stats)
+dealloc(newmem)
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+</CheatTable>
